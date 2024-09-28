@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day Counter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1 contenteditable="true" id="title">My Day Counter</h1>
+    
+    <div class="day-counter">
+      <div class="days">
+        <!-- Circles will be created here dynamically -->
+      </div>
+      <div class="controls">
+        <button id="subtract">−</button>
+        <span id="current-day">0</span>
+        <button id="add">+</button>
+      </div>
+    </div>
+    
+    <div class="save-load">
+      <button id="saveBtn">Save Progress</button>
+      <input type="text" id="keyInput" placeholder="Enter key to load data">
+      <button id="loadBtn">Load Progress</button>
+    </div>
+
+    <div class="generated-key">
+      <p>Your save key: <span id="generatedKey"></span></p>
+      <button id="copyKeyBtn">Copy Key</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
