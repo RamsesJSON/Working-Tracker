@@ -65,14 +65,14 @@ updateDayCount();
 function encodeData(dayCount, title) {
   const data = { dayCount, title };
   const jsonData = JSON.stringify(data);
-  return btoa(encodeURIComponent(jsonData)); // Properly encoding URI components to avoid corruption
+  return btoa(unescape(encodeURIComponent(jsonData))); // Proper encoding
 }
 
 // Function to decode Base64 data
 function decodeData(encodedData) {
   try {
-    const decodedData = decodeURIComponent(atob(encodedData)); // Properly decoding URI components
-    return JSON.parse(decodedData); // Parsing JSON
+    const decodedData = decodeURIComponent(escape(atob(encodedData))); // Proper decoding
+    return JSON.parse(decodedData);
   } catch (error) {
     console.error("Decode error:", error);
     alert("Invalid key. Please check and try again.");
