@@ -61,38 +61,42 @@ titleElement.addEventListener('input', () => {
 // Initialize
 updateDayCount();
 
-// Function to generate a unique key
-function generateUniqueKey() {
-  return 'key_' + Math.random().toString(36).substr(2, 9);
+// Function to encode data to Base64
+function encodeData(dayCount, title) {
+  const data = { dayCount, title };
+  const jsonData = JSON.stringify(data);
+  return btoa(jsonData); // Base64 encoding
 }
 
-// Save the progress with a unique key
-saveBtn.addEventListener('click', () => {
-  const key = generateUniqueKey();
-  const data = {
-    dayCount: dayCount,
-    title: titleElement.innerText
-  };
+// Function to decode Base64 data
+function decodeData(encodedData) {
+  try {
+    const decodedData = atob(encodedData); // Base64 decoding
+    return JSON.parse(decodedData);
+  } catch (error) {
+    alert("Invalid key. Please check and try again.");
+    return null;
+  }
+}
 
-  localStorage.setItem(key, JSON.stringify(data));
-  generatedKey.innerText = key;
-  alert("Progress saved! Your key is: " + key);
+// Save the progress with a Base64 encoded key
+saveBtn.addEventListener('click', () => {
+  const encodedKey = encodeData(dayCount, titleElement.innerText);
+  generatedKey.innerText = encodedKey;
+  alert("Progress saved! Your key is: " + encodedKey);
 });
 
-// Load the progress from the entered key
+// Load the progress from the entered Base64 key
 loadBtn.addEventListener('click', () => {
-  const key = keyInput.value.trim();
-  const savedData = localStorage.getItem(key);
+  const encodedKey = keyInput.value.trim();
+  const data = decodeData(encodedKey);
 
-  if (savedData) {
-    const data = JSON.parse(savedData);
+  if (data) {
     dayCount = data.dayCount;
     titleElement.innerText = data.title;
 
     updateDayCount();
     alert("Progress loaded successfully!");
-  } else {
-    alert("Invalid key. Please enter a valid key.");
   }
 });
 
